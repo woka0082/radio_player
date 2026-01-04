@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Configuration: Add Name on one line and URL on the next
+stations=(
+    "Jazz French"         "https://jazz-wr18.ice.infomaniak.ch/jazz-wr18-128.mp3"
+    "KPBS Classical SD"   "https://kpbs-classical.streamguys1.com/kpbs-classical-itunes-256k.aac"
+    "KDFC Classical DF"   "https://14023.live.streamtheworld.com/KDFCFMAAC.aac"
+    "937 Van JR Country"  "https://icy.jpbgdigital.com/CJJR.aac"
+    "Radio Kiss Latina"   "http://ice08.fluidstream.net/kk_latina.aac"
+    "CBC Music Van"       "https://26283.live.streamtheworld.com/CBUFM_CBC_SC"
+    "CBC Radio French"    "https://rcavliveaudio.akamaized.net/hls/live/2006635/P-2QMTL0_MTL/playlist.m3u8"
+    "CBC Radio BC"        "https://cbcradiolive.akamaized.net/hls/live/2041050/ES_R1PVC/master.m3u8"
+    "Classical MN"        "http://relax.stream.publicradio.org/relax.mp3"
+    "BBC East Asia"       "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service_east_asia"
+    "BBC World"           "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+    "Lofi Girl"           "https://boxradio-edge-00.streamafrica.net/lofi"
+)
+
+clear
+echo -e "\n  \e[1;34mINTERNET RADIO\e[0m"
+echo -e "  ------------------"
+
+# Loop through the array to print the menu
+for ((i=0; i<${#stations[@]}; i+=2)); do
+    index=$((i/2 + 1))
+    printf "  \e[1m%2d\e[0m : %s\n" "$index" "${stations[i]}"
+done
+echo -e "  \e[1mq\e[0m  : Quit\n"
+
+read -p "  Select Station: " choice
+
+if [[ "$choice" == "q" ]]; then
+    exit 0
+elif [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -le $(( ${#stations[@]} / 2 )) ]; then
+    idx=$(( (choice - 1) * 2 + 1 ))
+    url="${stations[$idx]}"
+    echo -e "\n  Playing: \e[1;32m${stations[$((idx-1))]}\e[0m..."
+    mpv --no-video "$url"
+else
+    echo -e "\n  Invalid selection."
+fi

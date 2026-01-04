@@ -1,0 +1,14 @@
+#!/bin/bash
+
+clear
+echo -e "\n  \e[1;32mMPV Folder Player\e[0m"
+echo -e "  ------------------"
+echo -e "  \e[1mSpace\e[0m : Pause/Play"
+echo -e "  \e[1m>\e[0m     : Next Song"
+echo -e "  \e[1m<\e[0m     : Prev Song"
+echo -e "  \e[1m9/0\e[0m   : Vol Down/Up"
+echo -e "  \e[1mq\e[0m     : Quit\n"
+
+# Plays all files in the current directory
+# --msg-level keeps the terminal clean
+mpv --msg-level=all=status --no-video --term-osd-bar .
